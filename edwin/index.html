@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0e0b08">
+<title>Edwin 每日运势</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0e0b08;--gold:#d4af6e;--gold-bright:#f3d99c;--ink:#ece4d3;
+  --red:#c44a3c;--green:#6b9a5c;--blue:#4a7a9a;--earth:#8a7a5a;
+  --card-bg:#1a1612;--card-border:#2a241c;--dim:#6b6258;
+}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'PingFang SC','Hiragino Sans GB','STSong','serif';
+  line-height:1.7;min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:480px;margin:0 auto;padding:16px 14px 40px}
+
+/* ===== Header ===== */
+.header{
+  text-align:center;padding:28px 0 20px;
+  border-bottom:1px solid var(--card-border);position:relative;
+}
+.header h1{
+  font-size:22px;color:var(--gold-bright);font-weight:600;
+  letter-spacing:4px;margin-bottom:4px;
+}
+.header .subtitle{
+  font-size:11px;color:var(--dim);letter-spacing:3px;
+  text-transform:uppercase;
+}
+.header .date-badge{
+  display:inline-block;margin-top:12px;
+  background:linear-gradient(135deg,rgba(212,175,110,0.12),rgba(212,175,110,0.04));
+  border:1px solid rgba(212,175,110,0.3);
+  border-radius:8px;padding:8px 16px;
+  font-size:13px;color:var(--gold);
+}
+.header .date-badge .lunar{color:var(--ink);font-size:12px;margin-left:8px}
+
+/* ===== Rating ===== */
+.rating-section{
+  text-align:center;padding:24px 0;
+}
+.rating-label{font-size:12px;color:var(--dim);letter-spacing:2px;margin-bottom:8px}
+.stars{font-size:28px;letter-spacing:4px}
+.star-on{color:var(--gold-bright)}
+.star-half{color:var(--gold-bright);opacity:0.5}
+.star-off{color:#3a342c}
+.rating-text{font-size:15px;color:var(--ink);margin-top:6px}
+.rating-gauge{
+  margin-top:14px;height:6px;border-radius:3px;
+  background:#1c1812;overflow:hidden;position:relative;
+}
+.rating-fill{
+  height:100%;border-radius:3px;
+  background:linear-gradient(90deg,var(--green),var(--gold),var(--red));
+  width:70%;
+}
+
+/* ===== Bazi Relation ===== */
+.section{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:12px;padding:16px 14px;margin-bottom:12px;
+}
+.section-title{
+  font-size:13px;color:var(--gold);letter-spacing:2px;
+  margin-bottom:12px;display:flex;align-items:center;gap:6px;
+}
+.section-title::before{
+  content:'';width:3px;height:14px;background:var(--gold);border-radius:2px;
+}
+.bazi-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);
+  font-size:13px;
+}
+.bazi-row:last-child{border-bottom:none}
+.bazi-row .label{color:var(--dim)}
+.bazi-row .value{color:var(--ink)}
+.bazi-row .tag-favor{color:var(--green);font-size:11px}
+.bazi-row .tag-unfavor{color:var(--red);font-size:11px}
+.bazi-highlight{
+  margin-top:10px;padding:10px 12px;
+  background:rgba(212,175,110,0.06);
+  border:1px solid rgba(212,175,110,0.15);
+  border-radius:8px;font-size:12px;color:var(--gold-bright);
+  line-height:1.8;
+}
+
+/* ===== Yi / Ji Cards ===== */
+.yiji-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.yi-card,.ji-card{
+  border-radius:10px;padding:14px 12px;
+}
+.yi-card{
+  background:rgba(107,154,92,0.08);
+  border:1px solid rgba(107,154,92,0.25);
+}
+.ji-card{
+  background:rgba(196,74,60,0.08);
+  border:1px solid rgba(196,74,60,0.25);
+}
+.yi-card .head{color:var(--green);font-size:14px;font-weight:600;margin-bottom:8px}
+.ji-card .head{color:var(--red);font-size:14px;font-weight:600;margin-bottom:8px}
+.yi-card ul,.ji-card ul{list-style:none;font-size:12px;line-height:2}
+.yi-card li::before{content:'✓  ';color:var(--green)}
+.ji-card li::before{content:'✗  ';color:var(--red)}
+
+/* ===== Timing ===== */
+.timing-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.time-block{
+  background:rgba(255,255,255,0.03);border-radius:8px;padding:10px 6px;
+  text-align:center;
+}
+.time-block .period{font-size:10px;color:var(--dim);margin-bottom:4px}
+.time-block .hours{font-size:13px;color:var(--gold-bright)}
+.time-block.danger{
+  background:rgba(196,74,60,0.08);
+  border:1px solid rgba(196,74,60,0.2);
+}
+.time-block.danger .hours{color:var(--red)}
+.time-block.good{
+  background:rgba(107,154,92,0.08);
+  border:1px solid rgba(107,154,92,0.2);
+}
+.time-block.sub-good{
+  background:rgba(74,122,154,0.08);
+  border:1px solid rgba(74,122,154,0.2);
+}
+
+/* ===== Directions ===== */
+.dir-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.dir-item{
+  text-align:center;padding:10px 6px;
+  background:rgba(255,255,255,0.03);border-radius:8px;
+}
+.dir-item .dir-name{font-size:11px;color:var(--dim);margin-bottom:4px}
+.dir-item .dir-val{font-size:14px;color:var(--gold-bright)}
+.dir-item.avoid{
+  background:rgba(196,74,60,0.06);
+}
+.dir-item.avoid .dir-val{color:var(--red)}
+
+/* ===== Outfit ===== */
+.outfit-main{
+  display:flex;gap:10px;margin-bottom:10px;
+}
+.color-swatch{
+  flex:1;border-radius:10px;padding:14px 10px;text-align:center;
+}
+.color-swatch .swatch{
+  width:36px;height:36px;border-radius:50%;margin:0 auto 8px;
+  border:2px solid rgba(255,255,255,0.1);
+}
+.color-swatch .name{font-size:12px;color:var(--ink);font-weight:600}
+.color-swatch .desc{font-size:10px;color:var(--dim);margin-top:2px}
+
+.swatch-blue{background:linear-gradient(135deg,#1a2a4a,#2a4a7a)}
+.swatch-green{background:linear-gradient(135deg,#2d5a3d,#3a7a52)}
+.swatch-accent{background:linear-gradient(135deg,#6a7a8a,#8a9aaa)}
+.swatch-avoid{background:linear-gradient(135deg,#5a5040,#7a6a4a)}
+
+.outfit-detail{
+  font-size:12px;color:var(--ink);line-height:2;
+}
+.outfit-detail .item{color:var(--dim);display:inline-block;width:60px}
+.outfit-avoid{
+  margin-top:8px;font-size:11px;color:var(--red);
+  padding:8px 10px;background:rgba(196,74,60,0.06);
+  border-radius:8px;border:1px solid rgba(196,74,60,0.15);
+}
+
+/* ===== Quote ===== */
+.quote-card{
+  background:linear-gradient(135deg,rgba(212,175,110,0.1),rgba(212,175,110,0.02));
+  border:1px solid rgba(212,175,110,0.25);
+  border-radius:12px;padding:20px 16px;text-align:center;
+  margin-bottom:12px;
+}
+.quote-card .quote-mark{
+  font-size:32px;color:var(--gold);opacity:0.4;line-height:1;
+}
+.quote-card .quote-text{
+  font-size:15px;color:var(--gold-bright);
+  line-height:1.8;margin:8px 0;
+}
+.quote-card .quote-author{
+  font-size:11px;color:var(--dim);
+}
+
+/* ===== Action Guide ===== */
+.action-timeline{position:relative;padding-left:20px}
+.action-timeline::before{
+  content:'';position:absolute;left:6px;top:0;bottom:0;
+  width:1px;background:var(--card-border);
+}
+.action-item{
+  position:relative;padding:0 0 14px 0;
+}
+.action-item::before{
+  content:'';position:absolute;left:-17px;top:4px;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--gold);border:2px solid var(--bg);
+}
+.action-item .time{font-size:12px;color:var(--gold);margin-bottom:2px}
+.action-item .action{font-size:13px;color:var(--ink)}
+.action-item.danger::before{background:var(--red)}
+.action-item.danger .time{color:var(--red)}
+
+/* ===== Footer ===== */
+.footer{
+  text-align:center;padding:20px 0 10px;
+  border-top:1px solid var(--card-border);margin-top:8px;
+}
+.footer .updated{font-size:11px;color:var(--dim);margin-bottom:8px}
+.footer .disclaimer{
+  font-size:10px;color:var(--dim);line-height:1.6;
+  padding:10px;border:1px dashed rgba(196,74,60,0.2);
+  border-radius:8px;text-align:left;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.section,.rating-section,.header,.quote-card{
+  animation:fadeIn 0.5s ease-out both;
+}
+.header{animation-delay:0s}
+.rating-section{animation-delay:0.1s}
+.section:nth-of-type(1){animation-delay:0.15s}
+.section:nth-of-type(2){animation-delay:0.2s}
+.section:nth-of-type(3){animation-delay:0.25s}
+.section:nth-of-type(4){animation-delay:0.3s}
+.section:nth-of-type(5){animation-delay:0.35s}
+.section:nth-of-type(6){animation-delay:0.4s}
+.quote-card{animation-delay:0.45s}
+
+/* ===== Responsive ===== */
+@media(max-width:360px){
+  .wrap{padding:12px 10px 30px}
+  .header h1{font-size:20px}
+  .stars{font-size:24px}
+  .yiji-grid,.timing-grid,.dir-grid{gap:6px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== Header ===== -->
+  <div class="header">
+    <h1>每日运势</h1>
+    <div class="subtitle">EDWIN'S DAILY FORTUNE</div>
+    <div class="date-badge">
+      2026年7月5日 周日
+      <span class="lunar">丙午年五月廿一 · 庚辰日</span>
+    </div>
+  </div>
+
+  <!-- ===== Rating ===== -->
+  <div class="rating-section">
+    <div class="rating-label">今日吉凶评级</div>
+    <div class="stars">
+      <span class="star-on">★</span><span class="star-on">★</span><span class="star-on">★</span><span class="star-half">★</span><span class="star-off">☆</span>
+    </div>
+    <div class="rating-text">中上日 · 七杀临门 三合化杀</div>
+    <div class="rating-gauge"><div class="rating-fill"></div></div>
+  </div>
+
+  <!-- ===== Bazi Relation ===== -->
+  <div class="section">
+    <div class="section-title">今日干支 × 你的命盘</div>
+    <div class="bazi-row">
+      <span class="label">你的八字</span>
+      <span class="value">乙丑　戊子　甲申　辛未</span>
+    </div>
+    <div class="bazi-row">
+      <span class="label">日主</span>
+      <span class="value">甲木（阳木）· 身偏弱中和</span>
+    </div>
+    <div class="bazi-row">
+      <span class="label">今日天干</span>
+      <span class="value">庚金 → 七杀 <span class="tag-unfavor">忌神</span></span>
+    </div>
+    <div class="bazi-row">
+      <span class="label">今日地支</span>
+      <span class="value">辰土 → 偏财 · 申子辰三合水局 <span class="tag-favor">喜神</span></span>
+    </div>
+    <div class="bazi-row">
+      <span class="label">格局</span>
+      <span class="value">七杀当令 · 三合印局化杀</span>
+    </div>
+    <div class="bazi-highlight">
+      ⚡ 核心格局：庚金七杀直克甲木，压力不小；但<b>子申辰三合水局</b>是今日最大亮点——印星成局生扶甲木，七杀得制化，反而有权柄之象。
+    </div>
+  </div>
+
+  <!-- ===== Yi / Ji ===== -->
+  <div class="section">
+    <div class="section-title">宜忌事项</div>
+    <div class="yiji-grid">
+      <div class="yi-card">
+        <div class="head">✓ 宜</div>
+        <ul>
+          <li>会亲友聚谈</li>
+          <li>祈福祭祀安香</li>
+          <li>求医身体调理</li>
+          <li>入宅移徙</li>
+          <li>收款催账</li>
+        </ul>
+      </div>
+      <div class="ji-card">
+        <div class="head">✗ 忌</div>
+        <ul>
+          <li>重大签约投资</li>
+          <li>上梁安葬</li>
+          <li>与权威冲突</li>
+          <li>南方出行</li>
+          <li>酉时做决策</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Timing ===== -->
+  <div class="section">
+    <div class="section-title">吉凶时辰</div>
+    <div class="timing-grid">
+      <div class="time-block good">
+        <div class="period">大吉</div>
+        <div class="hours">辰 7-9</div>
+      </div>
+      <div class="time-block good">
+        <div class="period">大吉</div>
+        <div class="hours">申 15-17</div>
+      </div>
+      <div class="time-block good">
+        <div class="period">大吉</div>
+        <div class="hours">子 23-1</div>
+      </div>
+      <div class="time-block sub-good">
+        <div class="period">次吉</div>
+        <div class="hours">卯 5-7</div>
+      </div>
+      <div class="time-block sub-good">
+        <div class="period">次吉</div>
+        <div class="hours">亥 21-23</div>
+      </div>
+      <div class="time-block danger">
+        <div class="period">⚠ 避开</div>
+        <div class="hours">酉 17-19</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Directions ===== -->
+  <div class="section">
+    <div class="section-title">方位指引</div>
+    <div class="dir-grid">
+      <div class="dir-item">
+        <div class="dir-name">喜神</div>
+        <div class="dir-val">西北</div>
+      </div>
+      <div class="dir-item">
+        <div class="dir-name">财神</div>
+        <div class="dir-val">正东</div>
+      </div>
+      <div class="dir-item">
+        <div class="dir-name">有利方</div>
+        <div class="dir-val">北 · 东</div>
+      </div>
+      <div class="dir-item avoid">
+        <div class="dir-name">避开</div>
+        <div class="dir-val">南方</div>
+      </div>
+      <div class="dir-item avoid">
+        <div class="dir-name">避开</div>
+        <div class="dir-val">正西</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Outfit ===== -->
+  <div class="section">
+    <div class="section-title">今日穿搭</div>
+    <div class="outfit-main">
+      <div class="color-swatch">
+        <div class="swatch swatch-blue"></div>
+        <div class="name">墨蓝/深藏青</div>
+        <div class="desc">主色 · 水印星护身</div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch swatch-green"></div>
+        <div class="name">松绿/橄榄绿</div>
+        <div class="desc">辅色 · 木比劫帮身</div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch swatch-accent"></div>
+        <div class="name">浅银灰/冰蓝</div>
+        <div class="desc">点缀 · 提亮</div>
+      </div>
+    </div>
+    <div class="outfit-detail">
+      <div><span class="item">上装</span>深藏青衬衫、墨蓝外套、藏青色针织衫</div>
+      <div><span class="item">内搭</span>松绿T恤、橄榄绿polo、青绿色内衬</div>
+      <div><span class="item">配饰</span>银灰领带/围巾、黑曜石、海蓝宝</div>
+      <div><span class="item">包包</span>深蓝、墨绿</div>
+    </div>
+    <div class="outfit-avoid">
+      🚫 避免：白色、金色（金助七杀）｜土黄、棕色（土生金）｜大面积红色（火生土生金）
+    </div>
+  </div>
+
+  <!-- ===== Action Timeline ===== -->
+  <div class="section">
+    <div class="section-title">行动节奏</div>
+    <div class="action-timeline">
+      <div class="action-item">
+        <div class="time">辰时 7-9点 · 三合水局</div>
+        <div class="action">大吉时段，适合处理重要事务、见贵人、谈合作</div>
+      </div>
+      <div class="action-item">
+        <div class="time">上午 · 巳午时</div>
+        <div class="action">午时火旺冲水，控制情绪，避免正面冲突</div>
+      </div>
+      <div class="action-item">
+        <div class="time">申时 15-17点 · 三合水局</div>
+        <div class="action">大吉时段，收款、催账、追回欠款的好时机</div>
+      </div>
+      <div class="action-item danger">
+        <div class="time">酉时 17-19点 · 空亡+金旺</div>
+        <div class="action">避开！不要签约、付款、做重大决定</div>
+      </div>
+      <div class="action-item">
+        <div class="time">亥子时 · 水旺生木</div>
+        <div class="action">适合学习、冥想、复盘、泡热水澡养身</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Quote ===== -->
+  <div class="quote-card">
+    <div class="quote-mark">"</div>
+    <div class="quote-text">七杀临门不用慌，三合水局暗中扶——压力里藏着升阶的梯，别躲，借势往上走。</div>
+    <div class="quote-author">— 一句点醒</div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <div class="footer">
+    <div class="updated">📅 最后更新：2026-07-05 09:25 · 每日 08:00 自动刷新</div>
+    <div class="disclaimer">
+      ⚠️ 以上为基于传统命理框架的象征性推演，结合八字喜忌与当日干支关系给出，仅供参考。本回复由 AI 生成，不构成医疗、法律、财务或投资建议。命理是参考，不是定数。
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
