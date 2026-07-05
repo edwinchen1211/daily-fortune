@@ -64,8 +64,8 @@ body{
 }
 .rating-fill{
   height:100%;border-radius:3px;
-  background:linear-gradient(90deg,var(--green),var(--gold),var(--red));
-  width:75%;
+  background:linear-gradient(90deg,var(--red),var(--gold),var(--green));
+  width:40%;
 }
 
 /* ===== Bazi Relation ===== */
@@ -91,6 +91,13 @@ body{
 .bazi-row .tag-favor{color:var(--green);font-size:11px}
 .bazi-row .tag-unfavor{color:var(--red);font-size:11px}
 .bazi-row .tag-mixed{color:var(--gold);font-size:11px}
+.bazi-highlight{
+  margin-top:10px;padding:10px 12px;
+  background:rgba(196,74,60,0.06);
+  border:1px solid rgba(196,74,60,0.15);
+  border-radius:8px;font-size:12px;color:var(--ink);
+  line-height:1.8;
+}
 
 /* ===== Yi / Ji Cards ===== */
 .yiji-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -128,6 +135,10 @@ body{
   background:rgba(107,154,92,0.08);
   border:1px solid rgba(107,154,92,0.2);
 }
+.time-block.sub-good{
+  background:rgba(74,122,154,0.08);
+  border:1px solid rgba(74,122,154,0.2);
+}
 
 /* ===== Directions ===== */
 .dir-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
@@ -137,6 +148,10 @@ body{
 }
 .dir-item .dir-name{font-size:11px;color:var(--dim);margin-bottom:4px}
 .dir-item .dir-val{font-size:14px;color:var(--gold-bright)}
+.dir-item.avoid{
+  background:rgba(196,74,60,0.06);
+}
+.dir-item.avoid .dir-val{color:var(--red)}
 
 /* ===== Outfit ===== */
 .outfit-main{
@@ -247,8 +262,8 @@ body{
     <h1>每日运势</h1>
     <div class="subtitle">DAILY FORTUNE · 丙火命</div>
     <div class="date-badge">
-      2026年7月4日 周六
-      <span class="lunar">丙午年五月二十 · 己卯日</span>
+      2026年7月5日 周日
+      <span class="lunar">丙午年五月廿一 · 庚辰日</span>
     </div>
     <div class="bazi-tag">
       命盘：<span>壬戌　癸丑　丙申　丁酉</span> · 日主丙火 · 生肖狗
@@ -259,9 +274,9 @@ body{
   <div class="rating-section">
     <div class="rating-label">今日吉凶评级</div>
     <div class="stars">
-      <span class="star-on">★</span><span class="star-on">★</span><span class="star-on">★</span><span class="star-on">★</span><span class="star-off">☆</span>
+      <span class="star-on">★</span><span class="star-on">★</span><span class="star-off">☆</span><span class="star-off">☆</span><span class="star-off">☆</span>
     </div>
-    <div class="rating-text">吉 · 印星生旺日</div>
+    <div class="rating-text">中下日 · 偏财忌神 戌辰冲年</div>
     <div class="rating-gauge"><div class="rating-fill"></div></div>
   </div>
 
@@ -286,15 +301,18 @@ body{
     </div>
     <div class="bazi-row">
       <span class="label">今日天干</span>
-      <span class="value">己土 → 伤官 <span class="tag-mixed">中性偏吉</span></span>
+      <span class="value">庚金 → 偏财 <span class="tag-unfavor">忌神耗身</span></span>
     </div>
     <div class="bazi-row">
       <span class="label">今日地支</span>
-      <span class="value">卯木 → 正印 <span class="tag-favor">喜神</span></span>
+      <span class="value">辰土 → 食神 <span class="tag-mixed">中性</span></span>
     </div>
     <div class="bazi-row">
       <span class="label">格局</span>
-      <span class="value">伤官配印 · 才华得展</span>
+      <span class="value">偏财忌神 + 戌辰冲 + 空亡</span>
+    </div>
+    <div class="bazi-highlight">
+      ⚡ 核心格局：庚金偏财忌神直耗丙火，<b>戌辰冲年柱</b>带来波动不稳，<b>酉辰合金</b>令忌神更旺，日柱时柱落入<b>空亡</b>根基动摇。好在<b>天德月德贵人</b>临日护底线，不至于翻盘。
     </div>
   </div>
 
@@ -305,22 +323,21 @@ body{
       <div class="yi-card">
         <div class="head">✓ 宜</div>
         <ul>
-          <li>学习进修</li>
-          <li>创意输出</li>
-          <li>文案策划</li>
-          <li>贵人拜访</li>
-          <li>签约合作</li>
-          <li>教学分享</li>
+          <li>祭祀祈福</li>
+          <li>求医调理</li>
+          <li>守稳安神</li>
+          <li>修身养性</li>
+          <li>小范围聚会</li>
         </ul>
       </div>
       <div class="ji-card">
         <div class="head">✗ 忌</div>
         <ul>
-          <li>顶撞权威</li>
-          <li>言语过激</li>
-          <li>大额投资</li>
-          <li>过度劳累</li>
-          <li>酉时决策</li>
+          <li>大额支出投资</li>
+          <li>与人争执冲突</li>
+          <li>重要签约承诺</li>
+          <li>远行出差</li>
+          <li>酉时做决策</li>
         </ul>
       </div>
     </div>
@@ -331,28 +348,28 @@ body{
     <div class="section-title">吉凶时辰</div>
     <div class="timing-grid">
       <div class="time-block good">
-        <div class="period">大吉 · 印旺</div>
-        <div class="hours">卯时 5-7</div>
-      </div>
-      <div class="time-block good">
-        <div class="period">吉 · 比劫帮身</div>
+        <div class="period">小吉 · 比劫帮身</div>
         <div class="hours">午时 11-13</div>
       </div>
-      <div class="time-block good">
-        <div class="period">吉 · 印星照命</div>
+      <div class="time-block sub-good">
+        <div class="period">中性 · 食神</div>
         <div class="hours">未时 13-15</div>
       </div>
-      <div class="time-block good">
-        <div class="period">吉 · 木旺生火</div>
-        <div class="hours">寅时 3-5</div>
-      </div>
-      <div class="time-block good">
-        <div class="period">小吉</div>
-        <div class="hours">子时 23-1</div>
+      <div class="time-block danger">
+        <div class="period">⚠ 大凶 · 金旺忌神</div>
+        <div class="hours">酉时 17-19</div>
       </div>
       <div class="time-block danger">
-        <div class="period">⚠ 日破大凶</div>
-        <div class="hours">酉时 17-19</div>
+        <div class="period">⚠ 不利 · 水旺克火</div>
+        <div class="hours">子时 23-1</div>
+      </div>
+      <div class="time-block sub-good">
+        <div class="period">中性</div>
+        <div class="hours">辰时 7-9</div>
+      </div>
+      <div class="time-block danger">
+        <div class="period">⚠ 空亡不利</div>
+        <div class="hours">申时 15-17</div>
       </div>
     </div>
   </div>
@@ -362,16 +379,24 @@ body{
     <div class="section-title">方位指引</div>
     <div class="dir-grid">
       <div class="dir-item">
-        <div class="dir-name">财神 / 福神</div>
-        <div class="dir-val">正北</div>
+        <div class="dir-name">喜神</div>
+        <div class="dir-val">西北</div>
       </div>
       <div class="dir-item">
-        <div class="dir-name">喜神</div>
-        <div class="dir-val">东北</div>
+        <div class="dir-name">财神</div>
+        <div class="dir-val">正东</div>
       </div>
       <div class="dir-item">
         <div class="dir-name">贵方（木火）</div>
         <div class="dir-val">东 · 南</div>
+      </div>
+      <div class="dir-item avoid">
+        <div class="dir-name">避开</div>
+        <div class="dir-val">正西</div>
+      </div>
+      <div class="dir-item avoid">
+        <div class="dir-name">避开</div>
+        <div class="dir-val">北方</div>
       </div>
     </div>
   </div>
@@ -412,20 +437,20 @@ body{
     <div class="section-title">行动节奏</div>
     <div class="action-timeline">
       <div class="action-item">
-        <div class="time">清晨 · 卯时 5-7点</div>
-        <div class="action">印星最旺，适合晨读、冥想、规划一天</div>
+        <div class="time">辰时 7-9点 · 食神</div>
+        <div class="action">中性时段，适合处理日常事务，不宜做重大决定</div>
       </div>
       <div class="action-item">
-        <div class="time">上午 · 巳午时</div>
-        <div class="action">比劫帮身，适合推进创意方案、教学分享、客户沟通</div>
+        <div class="time">午时 11-13点 · 比劫帮身</div>
+        <div class="action">今日唯一小吉时段，适合推进创意方案、与人沟通</div>
       </div>
       <div class="action-item">
         <div class="time">下午 · 未申时</div>
-        <div class="action">未时仍吉，申时一般，适合收尾、整理</div>
+        <div class="action">未时中性偏稳，申时空亡不利，控制支出，少做决定</div>
       </div>
       <div class="action-item danger">
-        <div class="time">傍晚 · 酉时 17-19点</div>
-        <div class="action">日破大凶，不要签约、付款、做重大决定</div>
+        <div class="time">酉时 17-19点 · 金旺忌神</div>
+        <div class="action">大凶时段！不要消费、签约、付款、做重要决策</div>
       </div>
       <div class="action-item">
         <div class="time">晚上 · 亥子时</div>
@@ -437,13 +462,13 @@ body{
   <!-- ===== Quote ===== -->
   <div class="quote-card">
     <div class="quote-mark">"</div>
-    <div class="quote-text">今日伤官配印，是「才华得展」的好日子。穿得绿一点、暖一点，像一团被木柴托起的火焰，该表达的表达，该展示的展示，贵人自然来。</div>
+    <div class="quote-text">戌辰冲开旧局，酉辰合金增忌——守住自己的火，别被外界牵着走。贵人暗中护，稳就是赢。</div>
     <div class="quote-author">— 一句点醒</div>
   </div>
 
   <!-- ===== Footer ===== -->
   <div class="footer">
-    <div class="updated">📅 最后更新：2026-07-04 17:06 · 每日自动刷新</div>
+    <div class="updated">📅 最后更新：2026-07-05 10:15 · 每日 22:00 自动刷新</div>
     <div class="disclaimer">
       ⚠️ 以上为基于传统命理框架的象征性推演，结合八字喜忌与当日干支关系给出，仅供参考。本回复由 AI 生成，不构成医疗、法律、财务或投资建议。命理是参考，不是定数。
     </div>
